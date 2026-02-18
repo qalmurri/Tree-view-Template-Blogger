@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html b:css='false' b:defaultwidgetversion='2' b:layoutsversion='3' lang='id' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/thoughtful/2007/b' xmlns:data='http://www.google.com/thoughtful/2007/data' xmlns:expr='http://www.google.com/thoughtful/2007/expr'>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsversion='3' lang='id' xmlns='http://www.w3.org/1999/xhtml'
+  xmlns:b='http://www.google.com/thoughtful/2007/b' xmlns:data='http://www.google.com/thoughtful/2007/data'
+  xmlns:expr='http://www.google.com/thoughtful/2007/expr'>
+
 <head>
-  <meta charset='utf-8'/>
-  <meta content='width=device-width, initial-scale=1' name='viewport'/>
-  <title><data:blog.pageTitle/></title>
-  <b:include data='blog' name='all-head-content'/>
-  
-  <b:skin><![CDATA[
+  <meta charset='utf-8' />
+  <meta content='width=device-width, initial-scale=1' name='viewport' />
+  <title>
+    <data:blog.pageTitle />
+  </title>
+  <b:include data='blog' name='all-head-content' />
+  <b:skin>
+    <![CDATA[
     /* RESET & CORE DARK MODE */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -88,70 +93,88 @@
       .hover-popup { display: none !important; }
     }
     #navbar-iframe { display: none !important; }
-  ]]></b:skin>
+  ]]>
+  </b:skin>
 </head>
 
 <body>
   <div class='container'>
-    
     <header>
       <h1 class='site-title'>
-        <a expr:href='data:blog.homepageUrl'><data:blog.title/></a>
+        <a expr:href='data:blog.homepageUrl'>
+          <data:blog.title />
+        </a>
       </h1>
     </header>
-
     <main>
       <b:section id='main' name='Main Content' showaddelement='yes'>
         <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
           <b:includable id='main'>
-            
             <b:if cond='data:view.isMultipleItems'>
-              <span class='section-label'>Blog/</span>
+              <span class='section-label'>
+                Blog/
+              </span>
               <div class='list-container'>
                 <b:loop values='data:posts' var='post'>
                   <div class='list-item'>
-                    
-                    <span class='info-tag'><data:post.author.name/> [<data:post.date/>]:</span>
-
+                    <span class='info-tag'>
+                      <data:post.author.name />[
+                      <data:post.date />]:
+                    </span>
                     <span class='title-trigger'>
-                      <a expr:href='data:post.url'><data:post.title/></a>
+                      <a expr:href='data:post.url'>
+                        <data:post.title />
+                      </a>
                       <div class='hover-popup'>
-                        <b:eval expr='data:post.body snippet { length: 200, links: false, linebreaks: false }'/>...
+                        <strong style='display:block; color:#fff; margin-bottom:5px;'>
+                          <data:post.title />
+                          <em style='display:block; font-size:10px; color:#666; text-align:left;'>
+                            <data:post.date />
+                          </em>
+                        </strong>
+                        <div style='margin-bottom:8px;'>
+                          <b:eval expr='data:post.body snippet { length: 200, links: false, linebreaks: false }' />
+                        </div>
+                        <em style='display:block; font-size:10px; color:#666; text-align:right;'>
+                          <data:post.author.name />
+                        </em>
                       </div>
                     </span>
-
-                    <span class='label-tag'> | 
+                    <span class='label-tag'> |
                       <b:loop values='data:post.labels' var='label'>
-                        <a class='label-link' expr:href='data:label.url'><data:label.name/></a><b:if cond='not data:label.isLast'>, </b:if>
+                        <a class='label-link' expr:href='data:label.url'>
+                          <data:label.name />
+                        </a>
+                        <b:if cond='not data:label.isLast'>|</b:if>
                       </b:loop>
                     </span>
-
                   </div>
                 </b:loop>
               </div>
             </b:if>
-
             <b:if cond='data:view.isSingleItem'>
               <b:loop values='data:posts' var='post'>
                 <article class='post-article'>
-                  <h2 class='post-title-header'><data:post.title/></h2>
+                  <h2 class='post-title-header'>
+                    <data:post.title />
+                  </h2>
                   <div class='post-content'>
-                    <data:post.body/>
+                    <data:post.body />
                   </div>
                 </article>
               </b:loop>
             </b:if>
-
           </b:includable>
         </b:widget>
       </b:section>
     </main>
-
-    <footer style='margin-top:60px; text-align:center; font-size:11px; color:#333; border-top: 1px solid #222; padding-top:15px;'>
-      &#169; <span id='y'/> <data:blog.title/>.
+    <footer
+      style='margin-top:60px; text-align:center; font-size:11px; color:#333; border-top: 1px solid #222; padding-top:15px;'>
+      &#169; <span id='y' />
+      <data:blog.title />.
       <script>document.getElementById('y').innerHTML = new Date().getFullYear();</script>
     </footer>
-
   </div>
 </body>
+
 </html>
