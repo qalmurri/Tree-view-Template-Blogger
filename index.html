@@ -13,86 +13,37 @@
   <b:include data='blog' name='all-head-content' />
   <b:skin>
     <![CDATA[
-    /* RESET & CORE DARK MODE */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #000;
-      --text: #fff;
-      --accent: #fff;
-      --dim: #a5a2a2;
-    }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-      font-size: 13px;
-      line-height: 1.4;
-      padding: 30px 15px;
-    }
-    a { color: inherit; text-decoration: none; transition: 0.2s; }
-    a:hover { color: var(--accent); background: #111; }
-
+    body { background: #000; color: #fff; font-family: "SFMono-Regular", Consolas, monospace; font-size: 13px; padding: 20px; }
+    a { color: inherit; text-decoration: none; }
     .container { max-width: 800px; margin: 0 auto; }
-
-    /* HEADER */
-    header { text-align: center; margin-bottom: 30px; }
-    .site-title a {
-      color: var(--accent);
-      font-size: 16px;
-      font-weight: bold;
-      text-transform: uppercase;
-      background: none !important;
-    }
-
-    /* SECTION LABEL */
-    .section-label {
-      color: var(--accent);
-      font-weight: bold;
-      margin: 20px 0 10px 0;
-      display: block;
-    }
-
-    /* LIST POSTS */
-    .list-container { list-style: none; }
-    .list-item {
-      display: block;
-      margin-bottom: 4px;
-      white-space: nowrap;
-    }
-    .info-tag { color: var(--dim); font-size: 11px; margin-right: 5px; }
-
-    /* POPUP SYSTEM */
-    .title-trigger { position: relative; display: inline-block; margin-right: 8px; }
-    .hover-popup {
-      visibility: hidden; opacity: 0;
-      position: absolute; z-index: 999;
-      background: #0a0a0a; color: #aaa;
-      border: 1px solid #333; padding: 10px;
-      width: 300px; left: 0; top: 20px;
-      font-family: sans-serif; font-size: 12px; line-height: 1.5;
-      pointer-events: none; transition: 0.2s ease-in-out;
-      box-shadow: 0 5px 20px rgba(0,0,0,1);
-      white-space: normal;
-    }
+    header { text-align: center; margin-bottom: 20px; }
+    .section-label { color: #fff; font-weight: bold; margin-bottom: 10px; display: block; }
+    
+    /* GRID KRONOLOGI */
+    .list-container { display: grid; grid-template-columns: max-content 2px 1fr; column-gap: 15px; }
+    .info-tag { grid-column: 1; text-align: right; color: #a5a2a2; white-space: nowrap; line-height: 1.4; }
+    .timeline-line { grid-column: 2; background: #333; position: relative; }
+    .timeline-line::after { content: ''; position: absolute; top: 5px; left: -3px; width: 8px; height: 8px; background: #fff; border-radius: 50%; }
+    .content-col { grid-column: 3; padding-bottom: 8px; line-height: 1.4; }
+    
+    .hover-popup { visibility: hidden; opacity: 0; position: absolute; z-index: 9; background: #0a0a0a; color: #aaa; border: 1px solid #333; padding: 10px; width: 300px; font-size: 12px; transition: 0.2s; pointer-events: none; white-space: normal; }
+    .title-trigger { position: relative; display: inline-block; }
     .title-trigger:hover .hover-popup { visibility: visible; opacity: 1; }
-
-    /* LABELS */
-    .label-tag { color: var(--dim); font-size: 11px; }
-    .label-link:hover { color: var(--accent) !important; text-decoration: underline; background:none!important; }
-
-    /* SINGLE POST CONTENT */
-    .post-article { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
-    .post-title-header { color: var(--accent); font-size: 20px; margin-bottom: 15px; }
-    .post-content { color: #ccc; line-height: 1.6; font-family: sans-serif; }
-    .post-content img { max-width: 100%; height: auto; border: 1px solid #222; margin: 15px 0; }
-
-    /* RESPONSIVE */
+    .label-tag { color: #a5a2a2; font-size: 11px; }
+    .post-article { margin-top: 20px; border-top: 1px solid #222; padding-top: 20px; }
+    #navbar-iframe { display: none; }
     @media (max-width: 600px) {
-      .list-item { white-space: normal; margin-bottom: 12px; }
-      .info-tag { display: block; margin-bottom: 2px; }
-      .hover-popup { display: none !important; }
-    }
-    #navbar-iframe { display: none !important; }
+
+  .list-container { 
+    grid-template-columns: max-content 2px 1fr; 
+    column-gap: 10px; /* Perkecil jarak agar muat di layar HP */
+  }
+  .info-tag { 
+    font-size: 10px; /* Perkecil sedikit font tanggal di HP */
+  }
+  /* Garis dan titik (.timeline-line) tidak perlu di-display:none */
+}
   ]]>
   </b:skin>
 </head>
@@ -100,31 +51,32 @@
 <body>
   <div class='container'>
     <header>
-      <h1 class='site-title'>
-        <a expr:href='data:blog.homepageUrl'>
+      <h1><a expr:href='data:blog.homepageUrl'>
           <data:blog.title />
-        </a>
-      </h1>
+        </a></h1>
     </header>
     <main>
-      <b:section id='main' name='Main Content' showaddelement='yes'>
+      <b:section id='main' name='Main Content'>
         <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
           <b:includable id='main'>
             <b:if cond='data:view.isMultipleItems'>
-              <span class='section-label'>
-                Blog/
-              </span>
+              <span class='section-label'>Blog/</span>
               <div class='list-container'>
-                <b:loop values='data:posts' var='post'>
-                  <div class='list-item'>
-                    <span class='info-tag'>
-                      <data:post.author.name />[
-                      <data:post.date />]:
-                    </span>
+                <b:loop index='i' values='data:posts' var='post'>
+                  <div class='info-tag'>
+                    <b:if cond='data:i == 0 or data:posts[data:i].date != data:posts[data:i - 1].date'>
+                      <data:post.date />
+                    </b:if>
+                  </div>
+                  <div class='timeline-line' />
+                  <div class='content-col'>
                     <span class='title-trigger'>
                       <a expr:href='data:post.url'>
-                        <data:post.title />
+                        <strong>
+                          <data:post.title />
+                        </strong>
                       </a>
+
                       <div class='hover-popup'>
                         <strong style='display:block; color:#fff; margin-bottom:5px;'>
                           <data:post.title />
@@ -132,20 +84,22 @@
                             <data:post.date />
                           </em>
                         </strong>
+
                         <div style='margin-bottom:8px;'>
                           <b:eval expr='data:post.body snippet { length: 200, links: false, linebreaks: false }' />
                         </div>
+
                         <em style='display:block; font-size:10px; color:#666; text-align:right;'>
                           <data:post.author.name />
                         </em>
                       </div>
                     </span>
-                    <span class='label-tag'> |
-                      <b:loop values='data:post.labels' var='label'>
-                        <a class='label-link' expr:href='data:label.url'>
+
+                    <span class='label-tag'>
+                      <b:loop values='data:post.labels' var='label'><a expr:href='data:label.url'>
                           <data:label.name />
                         </a>
-                        <b:if cond='not data:label.isLast'>|</b:if>
+                        <b:if cond='not data:label.isLast'></b:if>
                       </b:loop>
                     </span>
                   </div>
@@ -155,7 +109,7 @@
             <b:if cond='data:view.isSingleItem'>
               <b:loop values='data:posts' var='post'>
                 <article class='post-article'>
-                  <h2 class='post-title-header'>
+                  <h2>
                     <data:post.title />
                   </h2>
                   <div class='post-content'>
@@ -168,12 +122,6 @@
         </b:widget>
       </b:section>
     </main>
-    <footer
-      style='margin-top:60px; text-align:center; font-size:11px; color:#333; border-top: 1px solid #222; padding-top:15px;'>
-      &#169; <span id='y' />
-      <data:blog.title />.
-      <script>document.getElementById('y').innerHTML = new Date().getFullYear();</script>
-    </footer>
   </div>
 </body>
 
