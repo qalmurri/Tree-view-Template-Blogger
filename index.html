@@ -30,6 +30,14 @@
   .section-label { font-weight: bold; margin: 10px 0; display: block; }
   .label-tag, .post-meta { color: var(--dim); font-size: 11px; }
 
+  /* COUNTER STYLE - Minimalis sesuai request */
+.count-num {
+  font-size: 11px;
+  opacity: 0.8;
+  display: block;
+  margin-top: 2px;
+}
+
   /* POPUP */
   .title-trigger { position: relative; display: inline-block; }
   .hover-popup { visibility: hidden; opacity: 0; position: absolute; z-index: 9; background: #0a0a0a; color: #aaa; border: 1px solid #333; padding: 10px; width: 300px; font-size: 12px; transition: 0.2s; pointer-events: none; white-space: normal; }
@@ -72,9 +80,12 @@
               <span class='section-label'>Blog/</span>
               <div class='list-container'>
                 <b:loop index='i' values='data:posts' var='post'>
-                  <div class='info-tag'>
+                  <div class='info-tag' expr:data-m='data:post.date.year + "-" + data:post.date.month'
+                    expr:data-y='data:post.date.year'>
                     <b:if cond='data:i == 0 or data:posts[data:i].date != data:posts[data:i - 1].date'>
                       <data:post.date />
+                      <span class='count-num' expr:id='"c-" + data:post.date.year + "-" + data:post.date.month' />
+                      <span class='count-num' expr:id='"y-" + data:post.date.year' />
                     </b:if>
                   </div>
                   <div class='timeline-line' />
@@ -139,12 +150,40 @@
       </b:section>
     </main>
     <footer>
-      2025 - <span id='current-year' />
+      2025 - <span id='current-year'></span>
       <data:blog.title />. Template by <a href='https://github.com/qalmurri/Tree-view-Template-Blogger'
         target='_blank'>Qalmurri</a><br />
       Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a>
       <script>//<![CDATA[
-        const yr = document.getElementById('current-year'); if (yr) yr.innerHTML = new Date().getFullYear();
+        document.addEventListener("DOMContentLoaded", function () {
+          // Footer Year
+          const yr = document.getElementById('current-year'); if (yr) yr.innerHTML = new Date().getFullYear();
+
+          // Counter Logic
+          const mData = {}, yData = {};
+          document.querySelectorAll('.info-tag').forEach(el => {
+            const m = el.getAttribute('data-m'), y = el.getAttribute('data-y');
+            mData[m] = (mData[m] || 0) + 1;
+            yData[y] = (yData[y] || 0) + 1;
+          });
+
+          const monthNames = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+          ];
+
+          Object.keys(mData).forEach(k => {
+            const [year, month] = k.split('-');
+            const el = document.getElementById('c-' + k);
+            if (el) {
+              el.innerText = 'Total ' + monthNames[month - 1] + ': ' + mData[k] + ' post';
+            }
+          });
+          Object.keys(yData).forEach(k => {
+            const el = document.getElementById('y-' + k);
+            if (el) el.innerText = 'Total ' + k + ': ' + yData[k] + ' post';
+          });
+        });
         //]]></script>
     </footer>
   </div>
