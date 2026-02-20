@@ -29,7 +29,7 @@
   .timeline-line::after { content: ''; position: absolute; top: 5px; left: -3px; width: 8px; height: 8px; background: var(--txt); border-radius: 50%; }
   .content-col { padding-bottom: 8px; }
   .section-label { font-weight: bold; margin: 10px 0; display: block; }
-  .label-tag, .post-meta { color: var(--dim); font-size: 11px; text-transform: uppercase; }
+  .label-tag, .post-meta { color: var(--dim); font-size: 11px; text-transform: none; }
 
   /* 3. Hover Popup */
   .title-trigger { position: relative; display: inline-block; }
@@ -51,6 +51,15 @@
     .hover-popup { display: none; }
   }
   #navbar-iframe { display: none; }
+footer {
+  padding: 20px 0;
+  color: var(--dim);
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.6;
+}
+footer a:hover { color: #fff; text-decoration: underline; }
+
 ]]>
   </b:skin>
 </head>
@@ -134,10 +143,9 @@
                   </div>
 
                   <footer class='post-footer-tags'>
-                    <span class='section-label' style='display:inline;'>Tags: </span>
+                    <span class='section-label' style='display:inline;'></span>
                     <b:loop values='data:post.labels' var='label'>
-                      <a class='label-link' expr:href='data:label.url' style='margin-right:10px;'>
-                        #
+                      <a class='label-link' expr:href='data:label.url' style='margin-right:10px;'>#
                         <data:label.name />
                       </a>
                     </b:loop>
@@ -150,6 +158,17 @@
         </b:widget>
       </b:section>
     </main>
+    <footer>
+      2025 - <span id='current-year' />
+      <data:blog.title />. Template by <a href='https://github.com/qalmurri/Tree-view-Template-Blogger'
+        target='_blank'>Qalmurri</a>
+      <br />
+      Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a>
+      <script>
+        document.getElementById('current-year').innerHTML = new Date().getFullYear();
+      </script>
+    </footer>
+
   </div>
 </body>
 
