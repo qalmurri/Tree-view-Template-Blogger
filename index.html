@@ -13,30 +13,29 @@
   <b:include data='blog' name='all-head-content' />
   <b:skin>
     <![CDATA[
-  /* 1. Reset & Global */
+  /* RESET & CORE */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root { --bg: #000; --txt: #fff; --dim: #a5a2a2; --f-mono: "SFMono-Regular", Consolas, monospace; --f-sans: sans-serif; }
-  
   body { background: var(--bg); color: var(--txt); font-family: var(--f-mono); font-size: 13px; padding: 20px; line-height: 1.4; }
   a { color: inherit; text-decoration: none; }
   .container { max-width: 800px; margin: 0 auto; }
   header { text-align: center; margin-bottom: 20px; }
   
-  /* 2. Grid Timeline & List */
+  /* GRID TIMELINE */
   .list-container { display: grid; grid-template-columns: max-content 2px 1fr; column-gap: 15px; }
   .info-tag { text-align: right; color: var(--dim); white-space: nowrap; }
   .timeline-line { background: #333; position: relative; }
   .timeline-line::after { content: ''; position: absolute; top: 5px; left: -3px; width: 8px; height: 8px; background: var(--txt); border-radius: 50%; }
   .content-col { padding-bottom: 8px; }
   .section-label { font-weight: bold; margin: 10px 0; display: block; }
-  .label-tag, .post-meta { color: var(--dim); font-size: 11px; text-transform: none; }
+  .label-tag, .post-meta { color: var(--dim); font-size: 11px; }
 
-  /* 3. Hover Popup */
+  /* POPUP */
   .title-trigger { position: relative; display: inline-block; }
   .hover-popup { visibility: hidden; opacity: 0; position: absolute; z-index: 9; background: #0a0a0a; color: #aaa; border: 1px solid #333; padding: 10px; width: 300px; font-size: 12px; transition: 0.2s; pointer-events: none; white-space: normal; }
   .title-trigger:hover .hover-popup { visibility: visible; opacity: 1; }
 
-  /* 4. Single Post */
+  /* ARTICLE PAGE */
   .post-article { margin-top: 20px; border-top: 1px solid #222; padding-top: 20px; }
   .post-header { margin-bottom: 25px; }
   .post-content { color: #ccc; font-family: var(--f-sans); font-size: 15px; line-height: 1.7; }
@@ -44,23 +43,17 @@
   .post-content img { max-width: 100%; height: auto; border: 1px solid #222; margin: 20px 0; display: block; }
   .post-footer-tags { margin-top: 40px; padding-top: 15px; border-top: 1px dashed #333; font-size: 12px; }
 
-  /* 5. Mobile */
+  /* FOOTER */
+  footer { padding: 40px 0 20px; color: var(--dim); font-size: 11px; text-align: center; line-height: 1.6; }
+  footer a:hover { color: #fff; text-decoration: underline; }
+
   @media (max-width: 600px) {
-    .list-container { column-gap: 10px; }
+    .list-container { grid-template-columns: max-content 2px 1fr; column-gap: 10px; }
     .info-tag { font-size: 10px; }
     .hover-popup { display: none; }
   }
   #navbar-iframe { display: none; }
-footer {
-  padding: 20px 0;
-  color: var(--dim);
-  font-size: 11px;
-  text-align: center;
-  line-height: 1.6;
-}
-footer a:hover { color: #fff; text-decoration: underline; }
-
-]]>
+  ]]>
   </b:skin>
 </head>
 
@@ -87,35 +80,29 @@ footer a:hover { color: #fff; text-decoration: underline; }
                   <div class='timeline-line' />
                   <div class='content-col'>
                     <span class='title-trigger'>
-                      <a expr:href='data:post.url'>
-                        <strong>
+                      <a expr:href='data:post.url'><strong>
                           <data:post.title />
-                        </strong>
-                      </a>
-
+                        </strong></a>
                       <div class='hover-popup'>
                         <strong style='display:block; color:#fff; margin-bottom:5px;'>
                           <data:post.title />
-                          <em style='display:block; font-size:10px; color:#666; text-align:left;'>
+                          <em style='display:block; font-size:10px; color:#666; font-style:normal;'>
                             <data:post.date />
                           </em>
                         </strong>
-
                         <div style='margin-bottom:8px;'>
                           <b:eval expr='data:post.body snippet { length: 200, links: false, linebreaks: false }' />
                         </div>
-
-                        <em style='display:block; font-size:10px; color:#666; text-align:right;'>
+                        <em style='display:block; font-size:10px; color:#666; text-align:right; font-style:normal;'>
                           <data:post.author.name />
                         </em>
                       </div>
                     </span>
-
                     <span class='label-tag'>
                       <b:loop values='data:post.labels' var='label'><a expr:href='data:label.url'>
                           <data:label.name />
                         </a>
-                        <b:if cond='not data:label.isLast'></b:if>
+                        <b:if cond='not data:label.isLast'> </b:if>
                       </b:loop>
                     </span>
                   </div>
@@ -125,32 +112,25 @@ footer a:hover { color: #fff; text-decoration: underline; }
             <b:if cond='data:view.isSingleItem'>
               <b:loop values='data:posts' var='post'>
                 <article class='post-article'>
-
                   <header class='post-header'>
                     <h2 class='post-title-header'>
                       <data:post.title />
                     </h2>
                     <div class='post-meta'>
-                      <span>
-                        <data:post.author.name /> |
-                        <data:post.date />
-                      </span>
+                      <data:post.author.name /> |
+                      <data:post.date />
                     </div>
                   </header>
-
                   <div class='post-content'>
                     <data:post.body />
                   </div>
-
                   <footer class='post-footer-tags'>
-                    <span class='section-label' style='display:inline;'></span>
                     <b:loop values='data:post.labels' var='label'>
                       <a class='label-link' expr:href='data:label.url' style='margin-right:10px;'>#
                         <data:label.name />
                       </a>
                     </b:loop>
                   </footer>
-
                 </article>
               </b:loop>
             </b:if>
@@ -161,14 +141,12 @@ footer a:hover { color: #fff; text-decoration: underline; }
     <footer>
       2025 - <span id='current-year' />
       <data:blog.title />. Template by <a href='https://github.com/qalmurri/Tree-view-Template-Blogger'
-        target='_blank'>Qalmurri</a>
-      <br />
+        target='_blank'>Qalmurri</a><br />
       Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a>
-      <script>
-        document.getElementById('current-year').innerHTML = new Date().getFullYear();
-      </script>
+      <script>//<![CDATA[
+        const yr = document.getElementById('current-year'); if (yr) yr.innerHTML = new Date().getFullYear();
+        //]]></script>
     </footer>
-
   </div>
 </body>
 
