@@ -1,2 +1,2 @@
 tambahkan file index ke template blogger HTML
-[!image](image/image.png)
+![image](image/image.png)
