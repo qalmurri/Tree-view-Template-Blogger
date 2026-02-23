@@ -61,6 +61,25 @@
     .hover-popup { display: none; }
   }
   #navbar-iframe { display: none; }
+
+  .img-indicator,
+  .quote-indicator,
+  .code-indicator,
+  .link-indicator {
+    font-size: 11px;
+    opacity: 0.7;
+    display: none;
+  }
+
+  .code-indicator {
+    font-family: monospace;
+    opacity: 0.8;
+  }
+
+  .link-indicator {
+    opacity: 0.6;
+  }
+
   ]]>
   </b:skin>
 </head>
@@ -91,9 +110,15 @@
                   <div class='timeline-line' />
                   <div class='content-col'>
                     <span class='title-trigger'>
-                      <a expr:href='data:post.url'><strong>
+                      <a expr:href='data:post.url' class='post-title' expr:data-body='data:post.body'>
+                        <strong>
+                          <span class='img-indicator'>📷</span>
+                          <span class='quote-indicator'>📝</span>
+                          <span class='code-indicator'>{}</span>
+                          <span class='link-indicator'>🔗</span>
                           <data:post.title />
-                        </strong></a>
+                        </strong>
+                      </a>
                       <div class='hover-popup'>
                         <strong style='display:block; color:#fff; margin-bottom:5px;'>
                           <data:post.title />
@@ -156,11 +181,36 @@
       Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a>
       <script>//<![CDATA[
         document.addEventListener("DOMContentLoaded", function () {
-          // Footer Year
-          const yr = document.getElementById('current-year'); if (yr) yr.innerHTML = new Date().getFullYear();
+          document.querySelectorAll('.post-title').forEach(el => {
+            const body = el.getAttribute('data-body');
+            if (!body) return;
 
-          // Counter Logic
+            if (body.indexOf('<img') !== -1) {
+              const i = el.querySelector('.img-indicator');
+              if (i) i.style.display = 'inline';
+            }
+
+            if (body.indexOf('<blockquote') !== -1) {
+              const q = el.querySelector('.quote-indicator');
+              if (q) q.style.display = 'inline';
+            }
+
+            if (body.indexOf('<pre') !== -1 || body.indexOf('<code') !== -1) {
+              const c = el.querySelector('.code-indicator');
+              if (c) c.style.display = 'inline';
+            }
+
+            if (body.indexOf('<a ') !== -1) {
+              const l = el.querySelector('.link-indicator');
+              if (l) l.style.display = 'inline';
+            }
+          });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+          const yr = document.getElementById('current-year'); if (yr) yr.innerHTML = new Date().getFullYear();
           const mData = {}, yData = {};
+
           document.querySelectorAll('.info-tag').forEach(el => {
             const m = el.getAttribute('data-m'), y = el.getAttribute('data-y');
             mData[m] = (mData[m] || 0) + 1;
@@ -179,6 +229,7 @@
               el.innerText = 'Total ' + monthNames[month - 1] + ': ' + mData[k] + ' post';
             }
           });
+
           Object.keys(yData).forEach(k => {
             const el = document.getElementById('y-' + k);
             if (el) el.innerText = 'Total ' + k + ': ' + yData[k] + ' post';
