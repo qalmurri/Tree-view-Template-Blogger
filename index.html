@@ -120,6 +120,16 @@
   white-space: inherit;
 }
 
+/* TITLE khusus author menik */
+.post-title.author-menik {
+  color: #ff7aa2; /* pink lembut */
+}
+
+/* opsional, biar halus */
+.post-title {
+  transition: color .15s ease;
+}
+
   ]]>
   </b:skin>
 </head>
@@ -150,7 +160,10 @@
                   <div class='timeline-line' />
                   <div class='content-col'>
                     <span class='title-trigger'>
-                      <a expr:href='data:post.url' class='post-title' expr:data-body='data:post.body'>
+                      <a expr:href='data:post.url' class='post-title' expr:class='
+                      "post-title" +
+     (data:post.author.name == "menik" ? " author-menik" : "")
+   ' expr:data-body='data:post.body'>
                         <strong>
                           <span class='img-indicator'>📷</span>
                           <span class='quote-indicator'>📝</span>
