@@ -103,6 +103,23 @@
   color: #ddd;
 }
 
+/* PRE & CODE – minimal */
+.post-content pre {
+  overflow-x: auto;      /* scroll ke samping */
+  white-space: pre;      /* jaga spasi & indent */
+  font-family: monospace;
+  margin: 16px 0;
+}
+
+.post-content code {
+  font-family: monospace;
+}
+
+/* inline code jangan ikut scroll */
+.post-content pre code {
+  white-space: inherit;
+}
+
   ]]>
   </b:skin>
 </head>
