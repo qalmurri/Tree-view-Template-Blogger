@@ -79,6 +79,21 @@
     background-position: 0 0, 10px 10px;
   }
   body:has(.post-article.author-1)::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 10px; }
+  .sakura {
+    position: fixed;
+    top: -10px;
+    z-index: 9999;
+    user-select: none;
+    pointer-events: none;
+    color: #ffb6c1; /* Warna pink sakura */
+    font-size: 14px;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
     ]]>
   </b:skin>
 </head>
@@ -235,6 +250,28 @@
             });
           }
         });
+        const postMenikCheck = document.querySelector('.post-article.author-1');
+        if (postMenikCheck) {
+          const createSakura = () => {
+            const sakura = document.createElement('div');
+            sakura.className = 'sakura';
+            sakura.innerHTML = '🌸'; // Kamu bisa ganti dengan '❄' untuk salju
+            sakura.style.left = Math.random() * 100 + 'vw';
+            sakura.style.animationDuration = Math.random() * 3 + 2 + 's'; // Antara 2-5 detik
+            sakura.style.opacity = Math.random();
+            sakura.style.fontSize = Math.random() * 10 + 10 + 'px';
+
+            document.body.appendChild(sakura);
+
+            // Hapus elemen setelah animasi selesai agar tidak membebani memori
+            setTimeout(() => {
+              sakura.remove();
+            }, 5000);
+          };
+
+          // Jalankan interval pembuatan sakura setiap 300ms
+          setInterval(createSakura, 300);
+        }
         //]]></script>
     </footer>
   </div>
