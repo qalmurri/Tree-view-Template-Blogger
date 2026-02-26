@@ -67,10 +67,17 @@
   .post-content pre { overflow-x: auto; white-space: pre; font-family: monospace; margin: 16px 0; }
   .post-content code { font-family: monospace; }
 
-  /* AUTHOR COLORS */
-  .post-title.author-1 { color: #ff7aa2; }
-  .post-title.author-2 { color: #f1e05a; }
   .post-title { transition: color .15s ease; }
+
+  /* AUTHOR-1 COLORS */
+  .post-title.author-1 { color: #ff7aa2; }
+  .post-article.author-1 .post-title-header { color: #ff7aa2; }
+  .post-article.author-1 { border-top: 1px solid #ff7aa233; } /* Pink transparan */
+
+  /* AUTHOR-2 COLORS */
+  .post-title.author-2 { color: #f1e05a; }
+  .post-article.author-2 .post-title-header { color: #f1e05a; }
+  .post-article.author-2 { border-top: 1px solid #f1e05a33; } /* Kuning transparan */
 
     ]]>
   </b:skin>
@@ -144,7 +151,8 @@
 
             <b:if cond='data:view.isSingleItem'>
               <b:loop values='data:posts' var='post'>
-                <article class='post-article'>
+                <article
+                  expr:class='"post-article" + (data:post.author.name == "menik" ? " author-1" : (data:post.author.name == "Qalmurri" ? " author-2" : ""))'>
                   <header class='post-header'>
                     <h2 class='post-title-header'>
                       <data:post.title />
@@ -179,29 +187,38 @@
       Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a>
       <script>//<![CDATA[
         document.addEventListener("DOMContentLoaded", function () {
+          const yr = document.getElementById('current-year');
+          if (yr) yr.innerHTML = new Date().getFullYear();
+
+          const mData = {}, yData = {};
+          const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
           document.querySelectorAll('.post-title').forEach(el => {
             const body = el.getAttribute('data-body');
-            if (!body) return;
-            if (body.indexOf('<img') !== -1) { const i = el.querySelector('.img-indicator'); if (i) i.style.display = 'inline'; }
-            if (body.indexOf('<blockquote') !== -1) { const q = el.querySelector('.quote-indicator'); if (q) q.style.display = 'inline'; }
-            if (body.indexOf('<pre') !== -1 || body.indexOf('<code') !== -1) { const c = el.querySelector('.code-indicator'); if (c) c.style.display = 'inline'; }
-            if (body.indexOf('<a ') !== -1) { const l = el.querySelector('.link-indicator'); if (l) l.style.display = 'inline'; }
+
+            if (body) {
+              if (body.includes('<img')) { const i = el.querySelector('.img-indicator'); if (i) i.style.display = 'inline'; }
+              if (body.includes('<blockquote')) { const q = el.querySelector('.quote-indicator'); if (q) q.style.display = 'inline'; }
+              if (body.includes('<pre') || body.includes('<code')) { const c = el.querySelector('.code-indicator'); if (c) c.style.display = 'inline'; }
+              if (body.includes('<a ')) { const l = el.querySelector('.link-indicator'); if (l) l.style.display = 'inline'; }
+            }
           });
-          const yr = document.getElementById('current-year'); if (yr) yr.innerHTML = new Date().getFullYear();
-          const mData = {}, yData = {};
+
           document.querySelectorAll('.info-tag').forEach(el => {
             const m = el.getAttribute('data-m'), y = el.getAttribute('data-y');
-            mData[m] = (mData[m] || 0) + 1; yData[y] = (yData[y] || 0) + 1;
+            if (m) mData[m] = (mData[m] || 0) + 1;
+            if (y) yData[y] = (yData[y] || 0) + 1;
           });
-          const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
           Object.keys(mData).forEach(k => {
             const [year, month] = k.split('-');
             const el = document.getElementById('c-' + k);
-            if (el) el.innerText = 'Total ' + monthNames[month - 1] + ': ' + mData[k] + ' post';
+            if (el) el.innerText = `${monthNames[parseInt(month) - 1]}: ${mData[k]} post`;
           });
+
           Object.keys(yData).forEach(k => {
             const el = document.getElementById('y-' + k);
-            if (el) el.innerText = 'Total ' + k + ': ' + yData[k] + ' post';
+            if (el) el.innerText = `Total ${k}: ${yData[k]} post`;
           });
         });
         //]]></script>
