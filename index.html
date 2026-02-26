@@ -29,7 +29,6 @@
       font-family: var(--f-mono);
       font-size: 13px;
       padding: 20px;
-      line-height: 1.4;
       transition: background 0.5s ease;
     }
     a { color: inherit; text-decoration: none; }
@@ -286,11 +285,11 @@
           Object.keys(mData).forEach(k => {
             const [year, month] = k.split('-');
             const el = document.getElementById('c-' + k);
-            if (el) el.innerText = `${monthNames[parseInt(month) - 1]}: ${mData[k]} post`;
+            if (el) el.innerText = `${monthNames[parseInt(month) - 1]} ${mData[k]} posts`;
           });
           Object.keys(yData).forEach(k => {
             const el = document.getElementById('y-' + k);
-            if (el) el.innerText = `Total ${k}: ${yData[k]} post`;
+            if (el) el.innerText = `${k} ${yData[k]} posts`;
           });
           const postMenik = document.querySelector('.post-article.author-1');
           const audio = document.getElementById('bg-music-menik');
