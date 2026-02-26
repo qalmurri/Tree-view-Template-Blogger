@@ -13,87 +13,141 @@
   <b:include data='blog' name='all-head-content' />
   <b:skin>
     <![CDATA[
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --bg: #000; --txt: #fff; --dim: #a5a2a2; --f-mono: "SFMono-Regular", Consolas, monospace; --f-sans: sans-serif; }
-  body { background: var(--bg); color: var(--txt); font-family: var(--f-mono); font-size: 13px; padding: 20px; line-height: 1.4; transition: background 0.5s ease; }
-  a { color: inherit; text-decoration: none; }
-  .container { max-width: 800px; margin: 0 auto; }
-  header { text-align: center; margin-bottom: 20px; }
-    .list-container { display: grid; grid-template-columns: max-content 2px 1fr; column-gap: 15px; }
-  .info-tag { text-align: right; color: var(--dim); white-space: nowrap; }
-  .timeline-line { background: #333; position: relative; }
-  .timeline-line::after { content: ''; position: absolute; top: 5px; left: -3px; width: 8px; height: 8px; background: var(--txt); border-radius: 50%; }
-  .content-col { padding-bottom: 8px; }
-  .section-label { font-weight: bold; margin: 10px 0; display: block; }
-  .label-tag, .post-meta { color: var(--dim); font-size: 11px; }
-  .count-num { font-size: 11px; opacity: 0.8; display: block; margin-top: 2px; }
-  .title-trigger { position: relative; display: inline-block; }
-  .hover-popup { visibility: hidden; opacity: 0; position: absolute; z-index: 9; background: #0a0a0a; color: #aaa; border: 1px solid #333; padding: 10px; width: 300px; font-size: 12px; transition: 0.2s; pointer-events: none; white-space: normal; }
-  .title-trigger:hover .hover-popup { visibility: visible; opacity: 1; }
-  .post-article { margin-top: 20px; border-top: 1px solid #222; padding-top: 20px; }
-  .post-header { margin-bottom: 25px; }
-  .post-content { color: #ccc; font-family: var(--f-sans); font-size: 15px; line-height: 1.7; }
-  .post-content a { color: var(--txt); text-decoration: underline; }
-  .post-content img { max-width: 100%; height: auto; border: 1px solid #222; margin: 20px 0; display: block; }
-  .post-footer-tags { margin-top: 40px; padding-top: 15px; border-top: 1px dashed #333; font-size: 12px; }
-  footer { padding: 40px 0 20px; color: var(--dim); font-size: 11px; text-align: center; line-height: 1.6; }
-  footer a:hover { color: #fff; text-decoration: underline; }
-  @media (max-width: 600px) {
-    .list-container { grid-template-columns: max-content 2px 1fr; column-gap: 10px; }
-    .info-tag { font-size: 10px; }
-    .hover-popup { display: none; }
-  }
-  #navbar-iframe { display: none; }
-  .img-indicator, .quote-indicator, .code-indicator, .link-indicator { font-size: 11px; opacity: 0.7; display: none; }
-  .code-indicator { font-family: monospace; opacity: 0.8; }
-  .link-indicator { opacity: 0.6; }
-  .post-content blockquote { margin: 20px 0; padding: 12px 16px; border-left: 3px solid #444; background: #0b0b0b; color: #bbb; font-style: italic; }
-  .post-content pre { overflow-x: auto; white-space: pre; font-family: monospace; margin: 16px 0; }
-  .post-content code { font-family: monospace; }
-  .post-title { transition: color .15s ease; }
-  .post-title.author-1 { color: #ff7aa2; }
-  .post-article.author-1 { 
-    border-top: 2px dashed #ffb6c1; 
-    background: linear-gradient(135deg, #1a0f11 0%, #000000 100%); 
-    padding: 30px; 
-    border-radius: 20px; 
-    margin-top: 20px;
-    box-shadow: inset 0 0 50px rgba(255, 182, 193, 0.05);
-  }
-  .post-article.author-1 .post-content { color: #efd5d9; }
-  .post-article.author-1 .post-title-header { 
-    color: #ffb6c1; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    letter-spacing: 1px;
-    text-shadow: 0 0 8px rgba(255, 182, 193, 0.3);
-  }
-  .post-article.author-1 .post-title-header::before { content: '🌸 '; font-size: 18px; }
-  .post-article.author-1 .post-meta { color: #ffdae0; font-style: italic; }
-  .post-article.author-1 .post-content a { color: #ffb6c1; border-bottom: 1px dotted #ffb6c1; }
-  .post-article.author-1 .post-content blockquote { border-left: 3px solid #ffb6c1; background: #251619; border-radius: 0 10px 10px 0; color: #ffe4e8; }
-  .post-article.author-1 .label-link { color: #ffb6c1 !important; background: #4a272e; padding: 4px 12px; border-radius: 10px; border: 1px solid #ffb6c122; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #000;
+      --txt: #fff;
+      --dim: #a5a2a2;
+      --pink-main: #ff7aa2;
+      --pink-light: #ffb6c1;
+      --f-mono: "SFMono-Regular", Consolas, monospace;
+      --f-sans: 'Segoe UI', system-ui, sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font-family: var(--f-mono);
+      font-size: 13px;
+      padding: 20px;
+      line-height: 1.4;
+      transition: background 0.5s ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 800px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 20px; }
+    .list-container {
+      display: grid;
+      grid-template-columns: max-content 2px 1fr;
+      column-gap: 15px;
+    }
+    .info-tag { text-align: right; color: var(--dim); white-space: nowrap; }
+    .timeline-line { background: #333; position: relative; }
+    .timeline-line::after {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: -3px;
+      width: 8px;
+      height: 8px;
+      background: var(--txt);
+      border-radius: 50%;
+    }
+    .content-col { padding-bottom: 8px; }
+    .post-title { transition: color .15s ease; font-weight: bold; }
+    .section-label { font-weight: bold; margin: 10px 0; display: block; }
+    .label-tag, .post-meta { color: var(--dim); font-size: 11px; }
+    .count-num { font-size: 11px; opacity: 0.8; display: block; margin-top: 2px; }
+    .title-trigger { position: relative; display: inline-block; }
+    .hover-popup {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      z-index: 9;
+      background: #0a0a0a;
+      color: #aaa;
+      border: 1px solid #333;
+      padding: 10px;
+      width: 300px;
+      font-size: 12px;
+      transition: 0.2s;
+      pointer-events: none;
+      white-space: normal;
+    }
+    .title-trigger:hover .hover-popup { visibility: visible; opacity: 1; }
+    .post-article { margin-top: 20px; border-top: 1px solid #222; padding-top: 20px; }
+    .post-header { margin-bottom: 25px; }
+    .post-content { color: #ccc; font-family: var(--f-sans); font-size: 15px; line-height: 1.7; }
+    .post-content a { color: var(--txt); text-decoration: underline; }
+    .post-content img { max-width: 100%; height: auto; border: 1px solid #222; margin: 20px 0; display: block; }
+    .post-footer-tags { margin-top: 40px; padding-top: 15px; border-top: 1px dashed #333; font-size: 12px; }
+    .img-indicator, .quote-indicator, .code-indicator, .link-indicator { font-size: 11px; opacity: 0.7; display: none; }
+    .post-content blockquote { margin: 20px 0; padding: 12px 16px; border-left: 3px solid #444; background: #0b0b0b; color: #bbb; font-style: italic; }
+    .post-content pre { overflow-x: auto; white-space: pre; font-family: monospace; margin: 16px 0; }
+    .list-container:has(.post-title.author-1) .timeline-line:has(+ .content-col .author-1)::after {
+      background: var(--pink-light);
+      box-shadow: 0 0 8px rgba(255, 122, 162, 0.6);
+      animation: glow-pink 1s infinite ease-in-out;
+    }
+    @keyframes glow-pink {
+      0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 182, 193, 0.5), 0 0 10px rgba(255, 122, 162, 0.3);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 15px rgba(255, 182, 193, 0.8), 0 0 25px rgba(255, 122, 162, 0.5);
+        transform: scale(1.2);
+        background: #fff;
+      }
+    }
+    .post-title.author-1 { color: var(--pink-main); }
+    .post-article.author-1 {
+      border-top: 2px dashed var(--pink-light);
+      background: linear-gradient(135deg, #1a0f11 0%, #000000 100%);
+      padding: 30px;
+      border-radius: 20px;
+      margin-top: 20px;
+      box-shadow: inset 0 0 50px rgba(255, 182, 193, 0.05);
+    }
+    .post-article.author-1 .post-title-header {
+      color: var(--pink-light);
+      font-family: var(--f-sans);
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(255, 182, 193, 0.3);
+    }
+    .post-article.author-1 .post-title-header::before { content: '🌸 '; font-size: 18px; }
+    .post-article.author-1 .post-content { color: #efd5d9; }
+    .post-article.author-1 .post-content a { color: var(--pink-light); border-bottom: 1px dotted var(--pink-light); }
+    .post-article.author-1 .post-content blockquote { border-left: 3px solid var(--pink-light); background: #251619; color: #ffe4e8; }
+    .post-article.author-1 .label-link { color: var(--pink-light) !important; background: #4a272e; padding: 4px 12px; border-radius: 10px; border: 1px solid #ffb6c122; }
     body:has(.post-article.author-1) {
-    background-color: #0f0a0b;
-    background-image: radial-gradient(#ffb6c1 0.5px, transparent 0.5px), radial-gradient(#ffb6c1 0.5px, #0f0a0b 0.5px);
-    background-size: 20px 20px;
-    background-position: 0 0, 10px 10px;
-  }
-  body:has(.post-article.author-1)::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 10px; }
-  .sakura {
-    position: fixed;
-    top: -10px;
-    z-index: 9999;
-    user-select: none;
-    pointer-events: none;
-    color: #ffb6c1; /* Warna pink sakura */
-    font-size: 14px;
-    animation: fall linear forwards;
-  }
-
-  @keyframes fall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-  }
+      background-color: #0f0a0b;
+      background-image: radial-gradient(var(--pink-light) 0.5px, transparent 0.5px), radial-gradient(var(--pink-light) 0.5px, #0f0a0b 0.5px);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+    }
+    body:has(.post-article.author-1)::-webkit-scrollbar-thumb { background: var(--pink-light); border-radius: 10px; }
+    .sakura {
+      position: fixed;
+      top: -10px;
+      z-index: 9999;
+      user-select: none;
+      pointer-events: none;
+      color: var(--pink-light);
+      font-size: 14px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    @media (max-width: 600px) {
+      .list-container { grid-template-columns: max-content 2px 1fr; column-gap: 10px; }
+      .info-tag { font-size: 10px; }
+      .hover-popup { display: none; }
+    }
+    footer { padding: 40px 0 20px; color: var(--dim); font-size: 11px; text-align: center; line-height: 1.6; }
+    footer a:hover { color: #fff; text-decoration: underline; }
+    #navbar-iframe { display: none; }
     ]]>
   </b:skin>
 </head>
@@ -101,9 +155,11 @@
 <body>
   <div class='container'>
     <header>
-      <h1><a expr:href='data:blog.homepageUrl'>
+      <h1>
+        <a expr:href='data:blog.homepageUrl'>
           <data:blog.title />
-        </a></h1>
+        </a>
+      </h1>
     </header>
     <main>
       <b:section id='main' name='Main Content'>
@@ -128,8 +184,10 @@
                         expr:class='"post-title" + (data:post.author.name == "menik" ? " author-1" : "")'
                         expr:data-body='data:post.body'>
                         <strong>
-                          <span class='img-indicator'>📷</span> <span class='quote-indicator'>📝</span> <span
-                            class='code-indicator'>{}</span> <span class='link-indicator'>🔗</span>
+                          <span class='img-indicator'>📷</span>
+                          <span class='quote-indicator'>📝</span>
+                          <span class='code-indicator'>{}</span>
+                          <span class='link-indicator'>🔗</span>
                           <data:post.title />
                         </strong>
                       </a>
@@ -153,7 +211,6 @@
                         <a expr:href='data:label.url'>
                           <data:label.name />
                         </a>
-                        <b:if cond='not data:label.isLast'> </b:if>
                       </b:loop>
                     </span>
                   </div>
@@ -245,28 +302,33 @@
             document.addEventListener('click', playMusic);
             musicBtn.addEventListener('click', (e) => {
               e.stopPropagation();
-              if (audio.paused) { audio.play(); musicBtn.innerHTML = '♫'; musicBtn.style.opacity = '1'; }
-              else { audio.pause(); musicBtn.innerHTML = '×'; musicBtn.style.opacity = '0.5'; }
+              if (audio.paused) {
+                audio.play();
+                musicBtn.innerHTML = '♫';
+                musicBtn.style.opacity = '1';
+              } else {
+                audio.pause();
+                musicBtn.innerHTML = '×';
+                musicBtn.style.opacity = '0.5';
+              }
             });
           }
+          const postMenikCheck = document.querySelector('.post-article.author-1');
+          if (postMenikCheck) {
+            const createSakura = () => {
+              const sakura = document.createElement('div');
+              sakura.className = 'sakura';
+              sakura.innerHTML = '🌸';
+              sakura.style.left = Math.random() * 100 + 'vw';
+              sakura.style.animationDuration = Math.random() * 3 + 2 + 's';
+              sakura.style.opacity = Math.random();
+              sakura.style.fontSize = Math.random() * 10 + 10 + 'px';
+              document.body.appendChild(sakura);
+              setTimeout(() => { sakura.remove(); }, 5000);
+            };
+            setInterval(createSakura, 300);
+          }
         });
-        const postMenikCheck = document.querySelector('.post-article.author-1');
-        if (postMenikCheck) {
-          const createSakura = () => {
-            const sakura = document.createElement('div');
-            sakura.className = 'sakura';
-            sakura.innerHTML = '🌸';
-            sakura.style.left = Math.random() * 100 + 'vw';
-            sakura.style.animationDuration = Math.random() * 3 + 2 + 's';
-            sakura.style.opacity = Math.random();
-            sakura.style.fontSize = Math.random() * 10 + 10 + 'px';
-            document.body.appendChild(sakura);
-            setTimeout(() => {
-              sakura.remove();
-            }, 5000);
-          };
-          setInterval(createSakura, 300);
-        }
         //]]></script>
     </footer>
   </div>
