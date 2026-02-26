@@ -69,16 +69,86 @@
 
   .post-title { transition: color .15s ease; }
 
-  /* AUTHOR-1 COLORS */
-  .post-title.author-1 { color: #ff7aa2; }
-  .post-article.author-1 .post-title-header { color: #ff7aa2; }
-  .post-article.author-1 { border-top: 1px solid #ff7aa233; } /* Pink transparan */
-
-  /* AUTHOR-2 COLORS */
+  /* AUTHOR-2 - Normal */
   .post-title.author-2 { color: #f1e05a; }
   .post-article.author-2 .post-title-header { color: #f1e05a; }
   .post-article.author-2 { border-top: 1px solid #f1e05a33; } /* Kuning transparan */
 
+  /* AUTHOR-1 (MENIK) - CUTE & SOFT STYLE */
+  .post-title.author-1 { color: #ff7aa2; }
+  .post-article.author-1 { 
+    border-top: 2px dashed #ffb6c1; 
+    /* Background khusus: gradasi dari gelap ke ungu/pink tua */
+    background: linear-gradient(135deg, #1a0f11 0%, #000000 100%); 
+    padding: 30px; /* Tambah padding agar konten tidak mepet ke pinggir background baru */
+    border-radius: 20px; /* Membuat seluruh area postingan terasa lebih lembut */
+    margin-top: 20px;
+    box-shadow: inset 0 0 50px rgba(255, 182, 193, 0.05); /* Glow halus di dalam */
+  }
+  .post-article.author-1 .post-content {
+    color: #efd5d9; /* Warna teks agak pink pucat agar senada */
+  }
+  .post-article.author-1 .post-title-header { 
+    color: #ffb6c1; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(255, 182, 193, 0.3);
+    margin-bottom: 10px;
+  }
+  .post-article.author-1 .post-title-header::before {
+    content: '🌸 ';
+    font-size: 18px;
+  }
+  .post-article.author-1 .post-meta { 
+    color: #ffdae0;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  .post-article.author-1 .post-content a {
+    color: #ffb6c1;
+    border-bottom: 1px dotted #ffb6c1;
+  }
+  .post-article.author-1 .post-content blockquote {
+    border-left: 3px solid #ffb6c1;
+    background: #251619; /* Background quote sedikit lebih terang dari bg artikel */
+    border-radius: 0 10px 10px 0;
+    color: #ffe4e8;
+  }
+  .post-article.author-1 .post-content img {
+    border: 2px solid #ffb6c133;
+    border-radius: 15px; 
+    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.1);
+  }
+  .post-article.author-1 .label-link {
+    color: #ffb6c1 !important;
+    background: #4a272e;
+    padding: 4px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+    border: 1px solid #ffb6c122;
+  }
+  body:has(.post-article.author-1) {
+    background-color: #0f0a0b; /* Hitam dengan sedikit rona merah muda */
+    background-image: 
+      radial-gradient(#ffb6c1 0.5px, transparent 0.5px), 
+      radial-gradient(#ffb6c1 0.5px, #0f0a0b 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+  }
+  body:has(.post-article.author-1)::-webkit-scrollbar-thumb {
+    background: #ffb6c1;
+    border-radius: 10px;
+  }
+  body:has(.post-article.author-1)::-webkit-scrollbar-track {
+    background: #1a0f11;
+  }
+  .post-article.author-1 ::selection {
+    background: #ffb6c1;
+    color: #000;
+  }
+  .container:has(.post-article.author-1) {
+    transition: all 0.5s ease;
+  }
     ]]>
   </b:skin>
 </head>
@@ -180,6 +250,20 @@
         </b:widget>
       </b:section>
     </main>
+    <!-- Music Start -->
+    <b:if cond='data:view.isPost'>
+      <div id='music-container' style='display:none;'>
+        <audio id='bg-music-menik' loop='true' preload='auto'>
+          <source src='https://www.chosic.com/wp-content/uploads/2021/05/Every-Morning.mp3' type='audio/mpeg' />
+        </audio>
+
+        <button id='music-toggle'
+          style='position:fixed; bottom:20px; right:20px; z-index:999; background:#4a272e; border:1px solid #ffb6c1; color:#ffb6c1; border-radius:50%; width:35px; height:35px; cursor:pointer; font-size:14px; display:none;'>
+          ♫
+        </button>
+      </div>
+    </b:if>
+    <!-- Music End -->
     <footer>
       2025 - <span id='current-year'></span>
       <data:blog.title />. Template by <a href='https://github.com/qalmurri/Tree-view-Template-Blogger'
@@ -187,15 +271,16 @@
       Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a>
       <script>//<![CDATA[
         document.addEventListener("DOMContentLoaded", function () {
+          // --- 1. LOGIKA DASAR (YEAR & COUNTER) ---
           const yr = document.getElementById('current-year');
           if (yr) yr.innerHTML = new Date().getFullYear();
 
           const mData = {}, yData = {};
           const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
+          // --- 2. DETEKSI INDIKATOR KONTEN ---
           document.querySelectorAll('.post-title').forEach(el => {
             const body = el.getAttribute('data-body');
-
             if (body) {
               if (body.includes('<img')) { const i = el.querySelector('.img-indicator'); if (i) i.style.display = 'inline'; }
               if (body.includes('<blockquote')) { const q = el.querySelector('.quote-indicator'); if (q) q.style.display = 'inline'; }
@@ -204,6 +289,7 @@
             }
           });
 
+          // --- 3. PROSES COUNTER POST ---
           document.querySelectorAll('.info-tag').forEach(el => {
             const m = el.getAttribute('data-m'), y = el.getAttribute('data-y');
             if (m) mData[m] = (mData[m] || 0) + 1;
@@ -220,6 +306,39 @@
             const el = document.getElementById('y-' + k);
             if (el) el.innerText = `Total ${k}: ${yData[k]} post`;
           });
+
+          // --- 4. LOGIKA LAGU KHUSUS MENIK ---
+          const postMenik = document.querySelector('.post-article.author-1');
+          const audio = document.getElementById('bg-music-menik');
+          const musicBtn = document.getElementById('music-toggle');
+
+          if (postMenik && audio) {
+            musicBtn.style.display = 'block';
+            // Set volume agak pelan (0.3 = 30%) agar tidak mengejutkan
+            audio.volume = 0.3;
+
+            const playMusic = () => {
+              audio.play().catch(() => {
+                console.log("Autoplay diblokir, menunggu klik...");
+              });
+              document.removeEventListener('click', playMusic);
+            };
+
+            document.addEventListener('click', playMusic);
+
+            musicBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              if (audio.paused) {
+                audio.play();
+                musicBtn.innerHTML = '♫';
+                musicBtn.style.opacity = '1';
+              } else {
+                audio.pause();
+                musicBtn.innerHTML = '×';
+                musicBtn.style.opacity = '0.5';
+              }
+            });
+          }
         });
         //]]></script>
     </footer>
