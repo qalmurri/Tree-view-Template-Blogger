@@ -121,8 +121,11 @@
 }
 
 /* TITLE khusus author menik */
-.post-title.author-menik {
+.post-title.author-1 {
   color: #ff7aa2; /* pink lembut */
+}
+.post-title.author-2 {
+  color: #f1e05a; /* pink lembut */
 }
 
 /* opsional, biar halus */
@@ -162,7 +165,8 @@
                     <span class='title-trigger'>
                       <a expr:href='data:post.url' class='post-title' expr:class='
                       "post-title" +
-     (data:post.author.name == "menik" ? " author-menik" : "")
+     (data:post.author.name == "menik" ? " author-1" :
+     (data:post.author.name == "Qalmurri" ? " author-2" : ""))
    ' expr:data-body='data:post.body'>
                         <strong>
                           <span class='img-indicator'>📷</span>
@@ -220,6 +224,30 @@
                       </a>
                     </b:loop>
                   </footer>
+
+                  <div style='margin-top:50px; border-top:1px solid #222; padding-top:20px;'>
+                    <span class='section-label'>Navigation/</span>
+                    <div class='list-container'>
+                      <b:if cond='data:newerPageUrl'>
+                        <div class='info-tag'>Newer</div>
+                        <div class='timeline-line' />
+                        <div class='content-col'>
+                          <a expr:href='data:newerPageUrl' class='post-title'><strong>
+                              <data:newerPageTitle />
+                            </strong></a>
+                        </div>
+                      </b:if>
+                      <b:if cond='data:olderPageUrl'>
+                        <div class='info-tag'>Older</div>
+                        <div class='timeline-line' />
+                        <div class='content-col'>
+                          <a expr:href='data:olderPageUrl' class='post-title'><strong>
+                              <data:olderPageTitle />
+                            </strong></a>
+                        </div>
+                      </b:if>
+                    </div>
+                  </div>
                 </article>
               </b:loop>
             </b:if>
