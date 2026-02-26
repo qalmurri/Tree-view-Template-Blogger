@@ -21,7 +21,7 @@
   .container { max-width: 800px; margin: 0 auto; }
   header { text-align: center; margin-bottom: 20px; }
   
-  /* GRID TIMELINE */
+  /* GRID TIMELINE (HOME) */
   .list-container { display: grid; grid-template-columns: max-content 2px 1fr; column-gap: 15px; }
   .info-tag { text-align: right; color: var(--dim); white-space: nowrap; }
   .timeline-line { background: #333; position: relative; }
@@ -30,20 +30,15 @@
   .section-label { font-weight: bold; margin: 10px 0; display: block; }
   .label-tag, .post-meta { color: var(--dim); font-size: 11px; }
 
-  /* COUNTER STYLE - Minimalis sesuai request */
-.count-num {
-  font-size: 11px;
-  opacity: 0.8;
-  display: block;
-  margin-top: 2px;
-}
+  /* COUNTER STYLE */
+  .count-num { font-size: 11px; opacity: 0.8; display: block; margin-top: 2px; }
 
-  /* POPUP */
+  /* POPUP (INDEX ONLY) */
   .title-trigger { position: relative; display: inline-block; }
   .hover-popup { visibility: hidden; opacity: 0; position: absolute; z-index: 9; background: #0a0a0a; color: #aaa; border: 1px solid #333; padding: 10px; width: 300px; font-size: 12px; transition: 0.2s; pointer-events: none; white-space: normal; }
   .title-trigger:hover .hover-popup { visibility: visible; opacity: 1; }
 
-  /* ARTICLE PAGE */
+  /* ARTICLE PAGE - CLEAN STYLE */
   .post-article { margin-top: 20px; border-top: 1px solid #222; padding-top: 20px; }
   .post-header { margin-bottom: 25px; }
   .post-content { color: #ccc; font-family: var(--f-sans); font-size: 15px; line-height: 1.7; }
@@ -62,78 +57,22 @@
   }
   #navbar-iframe { display: none; }
 
-  .img-indicator,
-  .quote-indicator,
-  .code-indicator,
-  .link-indicator {
-    font-size: 11px;
-    opacity: 0.7;
-    display: none;
-  }
+  /* INDICATORS */
+  .img-indicator, .quote-indicator, .code-indicator, .link-indicator { font-size: 11px; opacity: 0.7; display: none; }
+  .code-indicator { font-family: monospace; opacity: 0.8; }
+  .link-indicator { opacity: 0.6; }
 
-  .code-indicator {
-    font-family: monospace;
-    opacity: 0.8;
-  }
+  /* CONTENT ELEMENTS */
+  .post-content blockquote { margin: 20px 0; padding: 12px 16px; border-left: 3px solid #444; background: #0b0b0b; color: #bbb; font-style: italic; }
+  .post-content pre { overflow-x: auto; white-space: pre; font-family: monospace; margin: 16px 0; }
+  .post-content code { font-family: monospace; }
 
-  .link-indicator {
-    opacity: 0.6;
-  }
+  /* AUTHOR COLORS */
+  .post-title.author-1 { color: #ff7aa2; }
+  .post-title.author-2 { color: #f1e05a; }
+  .post-title { transition: color .15s ease; }
 
-/* BLOCKQUOTE STYLE – simple & safe */
-.post-content blockquote {
-  margin: 20px 0;
-  padding: 12px 16px;
-  border-left: 3px solid #444;
-  background: #0b0b0b;
-  color: #bbb;
-  font-style: italic;
-}
-
-.post-content blockquote p {
-  margin: 0;
-}
-
-.post-content blockquote i,
-.post-content blockquote em {
-  font-style: italic;
-}
-
-.post-content blockquote strong {
-  color: #ddd;
-}
-
-/* PRE & CODE – minimal */
-.post-content pre {
-  overflow-x: auto;      /* scroll ke samping */
-  white-space: pre;      /* jaga spasi & indent */
-  font-family: monospace;
-  margin: 16px 0;
-}
-
-.post-content code {
-  font-family: monospace;
-}
-
-/* inline code jangan ikut scroll */
-.post-content pre code {
-  white-space: inherit;
-}
-
-/* TITLE khusus author menik */
-.post-title.author-1 {
-  color: #ff7aa2; /* pink lembut */
-}
-.post-title.author-2 {
-  color: #f1e05a; /* pink lembut */
-}
-
-/* opsional, biar halus */
-.post-title {
-  transition: color .15s ease;
-}
-
-  ]]>
+    ]]>
   </b:skin>
 </head>
 
@@ -148,6 +87,7 @@
       <b:section id='main' name='Main Content'>
         <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
           <b:includable id='main'>
+
             <b:if cond='data:view.isMultipleItems'>
               <span class='section-label'>Blog/</span>
               <div class='list-container'>
@@ -163,11 +103,9 @@
                   <div class='timeline-line' />
                   <div class='content-col'>
                     <span class='title-trigger'>
-                      <a expr:href='data:post.url' class='post-title' expr:class='
-                      "post-title" +
-     (data:post.author.name == "menik" ? " author-1" :
-     (data:post.author.name == "Qalmurri" ? " author-2" : ""))
-   ' expr:data-body='data:post.body'>
+                      <a expr:href='data:post.url'
+                        expr:class='"post-title" + (data:post.author.name == "menik" ? " author-1" : (data:post.author.name == "Qalmurri" ? " author-2" : ""))'
+                        expr:data-body='data:post.body'>
                         <strong>
                           <span class='img-indicator'>📷</span>
                           <span class='quote-indicator'>📝</span>
@@ -192,7 +130,8 @@
                       </div>
                     </span>
                     <span class='label-tag'>
-                      <b:loop values='data:post.labels' var='label'><a expr:href='data:label.url'>
+                      <b:loop values='data:post.labels' var='label'>
+                        <a expr:href='data:label.url'>
                           <data:label.name />
                         </a>
                         <b:if cond='not data:label.isLast'> </b:if>
@@ -202,6 +141,7 @@
                 </b:loop>
               </div>
             </b:if>
+
             <b:if cond='data:view.isSingleItem'>
               <b:loop values='data:posts' var='post'>
                 <article class='post-article'>
@@ -224,33 +164,10 @@
                       </a>
                     </b:loop>
                   </footer>
-
-                  <div style='margin-top:50px; border-top:1px solid #222; padding-top:20px;'>
-                    <span class='section-label'>Navigation/</span>
-                    <div class='list-container'>
-                      <b:if cond='data:newerPageUrl'>
-                        <div class='info-tag'>Newer</div>
-                        <div class='timeline-line' />
-                        <div class='content-col'>
-                          <a expr:href='data:newerPageUrl' class='post-title'><strong>
-                              <data:newerPageTitle />
-                            </strong></a>
-                        </div>
-                      </b:if>
-                      <b:if cond='data:olderPageUrl'>
-                        <div class='info-tag'>Older</div>
-                        <div class='timeline-line' />
-                        <div class='content-col'>
-                          <a expr:href='data:olderPageUrl' class='post-title'><strong>
-                              <data:olderPageTitle />
-                            </strong></a>
-                        </div>
-                      </b:if>
-                    </div>
-                  </div>
                 </article>
               </b:loop>
             </b:if>
+
           </b:includable>
         </b:widget>
       </b:section>
@@ -265,52 +182,23 @@
           document.querySelectorAll('.post-title').forEach(el => {
             const body = el.getAttribute('data-body');
             if (!body) return;
-
-            if (body.indexOf('<img') !== -1) {
-              const i = el.querySelector('.img-indicator');
-              if (i) i.style.display = 'inline';
-            }
-
-            if (body.indexOf('<blockquote') !== -1) {
-              const q = el.querySelector('.quote-indicator');
-              if (q) q.style.display = 'inline';
-            }
-
-            if (body.indexOf('<pre') !== -1 || body.indexOf('<code') !== -1) {
-              const c = el.querySelector('.code-indicator');
-              if (c) c.style.display = 'inline';
-            }
-
-            if (body.indexOf('<a ') !== -1) {
-              const l = el.querySelector('.link-indicator');
-              if (l) l.style.display = 'inline';
-            }
+            if (body.indexOf('<img') !== -1) { const i = el.querySelector('.img-indicator'); if (i) i.style.display = 'inline'; }
+            if (body.indexOf('<blockquote') !== -1) { const q = el.querySelector('.quote-indicator'); if (q) q.style.display = 'inline'; }
+            if (body.indexOf('<pre') !== -1 || body.indexOf('<code') !== -1) { const c = el.querySelector('.code-indicator'); if (c) c.style.display = 'inline'; }
+            if (body.indexOf('<a ') !== -1) { const l = el.querySelector('.link-indicator'); if (l) l.style.display = 'inline'; }
           });
-        });
-
-        document.addEventListener("DOMContentLoaded", function () {
           const yr = document.getElementById('current-year'); if (yr) yr.innerHTML = new Date().getFullYear();
           const mData = {}, yData = {};
-
           document.querySelectorAll('.info-tag').forEach(el => {
             const m = el.getAttribute('data-m'), y = el.getAttribute('data-y');
-            mData[m] = (mData[m] || 0) + 1;
-            yData[y] = (yData[y] || 0) + 1;
+            mData[m] = (mData[m] || 0) + 1; yData[y] = (yData[y] || 0) + 1;
           });
-
-          const monthNames = [
-            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-          ];
-
+          const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
           Object.keys(mData).forEach(k => {
             const [year, month] = k.split('-');
             const el = document.getElementById('c-' + k);
-            if (el) {
-              el.innerText = 'Total ' + monthNames[month - 1] + ': ' + mData[k] + ' post';
-            }
+            if (el) el.innerText = 'Total ' + monthNames[month - 1] + ': ' + mData[k] + ' post';
           });
-
           Object.keys(yData).forEach(k => {
             const el = document.getElementById('y-' + k);
             if (el) el.innerText = 'Total ' + k + ': ' + yData[k] + ' post';
