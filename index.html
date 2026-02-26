@@ -255,21 +255,16 @@
           const createSakura = () => {
             const sakura = document.createElement('div');
             sakura.className = 'sakura';
-            sakura.innerHTML = '🌸'; // Kamu bisa ganti dengan '❄' untuk salju
+            sakura.innerHTML = '🌸';
             sakura.style.left = Math.random() * 100 + 'vw';
-            sakura.style.animationDuration = Math.random() * 3 + 2 + 's'; // Antara 2-5 detik
+            sakura.style.animationDuration = Math.random() * 3 + 2 + 's';
             sakura.style.opacity = Math.random();
             sakura.style.fontSize = Math.random() * 10 + 10 + 'px';
-
             document.body.appendChild(sakura);
-
-            // Hapus elemen setelah animasi selesai agar tidak membebani memori
             setTimeout(() => {
               sakura.remove();
             }, 5000);
           };
-
-          // Jalankan interval pembuatan sakura setiap 300ms
           setInterval(createSakura, 300);
         }
         //]]></script>
