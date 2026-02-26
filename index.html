@@ -81,22 +81,7 @@
     .img-indicator, .quote-indicator, .code-indicator, .link-indicator { font-size: 11px; opacity: 0.7; display: none; }
     .post-content blockquote { margin: 20px 0; padding: 12px 16px; border-left: 3px solid #444; background: #0b0b0b; color: #bbb; font-style: italic; }
     .post-content pre { overflow-x: auto; white-space: pre; font-family: monospace; margin: 16px 0; }
-    .list-container:has(.post-title.author-1) .timeline-line:has(+ .content-col .author-1)::after {
-      background: var(--pink-light);
-      box-shadow: 0 0 8px rgba(255, 122, 162, 0.6);
-      animation: glow-pink 1s infinite ease-in-out;
-    }
-    @keyframes glow-pink {
-      0%, 100% {
-        box-shadow: 0 0 5px rgba(255, 182, 193, 0.5), 0 0 10px rgba(255, 122, 162, 0.3);
-        transform: scale(1);
-      }
-      50% {
-        box-shadow: 0 0 15px rgba(255, 182, 193, 0.8), 0 0 25px rgba(255, 122, 162, 0.5);
-        transform: scale(1.2);
-        background: #fff;
-      }
-    }
+    .list-container:has(.post-title.author-1) .timeline-line:has(+ .content-col .author-1)::after {background: #ff6179;}
     .post-title.author-1 { color: var(--pink-main); }
     .post-article.author-1 {
       border-top: 2px dashed var(--pink-light);
